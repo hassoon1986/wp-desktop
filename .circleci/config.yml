@@ -382,7 +382,7 @@ jobs:
                   set +e
                   source $HOME/.nvm/nvm.sh
                   nvm use
-                  make package
+                  make package ELECTRON_BUILDER_ARGS='-c.releaseInfo.releaseNotesFile=CHANGELOG.md'
       # Temporarily disable the test
       # TODO: Fixme – seems to be an issue with `portscanner`
       # - run:
