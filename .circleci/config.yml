@@ -248,10 +248,15 @@ jobs:
       - *calypso_finalize_cache
       - *calypso_save_cache
       - *webhook_notify_failed
+      - run:
+          name: Archive JavaScript Source
+          command: |
+            tar -zcf build.tar.gz build
+            tar -zcf calypso.tar.gz calypso
       - store_artifacts:
-          path: calypso/
+          path: calypso.tar.gz
       - store_artifacts:
-          path: build/
+          path: build.tar.gz
       - persist_to_workspace:
           root: ~/wp-desktop
           paths: *app_cache_paths
