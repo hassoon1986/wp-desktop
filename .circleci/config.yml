@@ -248,6 +248,10 @@ jobs:
       - *calypso_finalize_cache
       - *calypso_save_cache
       - *webhook_notify_failed
+      - store_artifacts:
+          path: calypso/
+      - store_artifacts:
+          path: build/
       - persist_to_workspace:
           root: ~/wp-desktop
           paths: *app_cache_paths
