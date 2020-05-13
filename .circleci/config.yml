@@ -131,9 +131,9 @@ references:
     run:
       name: Finalize calypso cache
       command: |
-              if [ "$(cat calypso-current-hash)" != "$(cat calypso-hash)" ]; then
+              # if [ "$(cat calypso-current-hash)" != "$(cat calypso-hash)" ]; then
                 cp calypso-current-hash calypso-hash
-              fi
+              # fi
   calypso_save_cache: &calypso_save_cache
     save_cache:
       name: Save calypso cache
@@ -235,7 +235,6 @@ jobs:
       - *install_linux_dependencies
       - *setup_calypso
       - *calypso_prepare_cache
-      - *calypso_restore_cache
       - *restore_nvm
       - *setup_nvm
       - *save_nvm
