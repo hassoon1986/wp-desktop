@@ -226,7 +226,7 @@ jobs:
     environment:
       CONFIG_ENV: release
       MINIFY_JS: true
-      NODE_ARGS: --max_old_space_size=3072
+      NODE_ARGS: --max_old_space_size=3584
       CALYPSO_HASH: << pipeline.parameters.CALYPSO_HASH >>
       sha: << pipeline.parameters.sha >>
       calypsoProject: << pipeline.parameters.calypsoProject >>
