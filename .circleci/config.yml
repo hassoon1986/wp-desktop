@@ -130,10 +130,7 @@ references:
   calypso_finalize_cache: &calypso_finalize_cache
     run:
       name: Finalize calypso cache
-      command: |
-              # if [ "$(cat calypso-current-hash)" != "$(cat calypso-hash)" ]; then
-                cp calypso-current-hash calypso-hash
-              # fi
+      command: cp calypso-current-hash calypso-hash
   calypso_save_cache: &calypso_save_cache
     save_cache:
       name: Save calypso cache
@@ -147,14 +144,10 @@ references:
                 source $HOME/.nvm/nvm.sh
                 nvm use
 
-                # only build the whole bundle when there is no calypso-hash file
-                # if [ "$(cat calypso-current-hash)" != "$(cat calypso-hash)" ]; then
                   cp calypso-packages-webpack.config.js calypso/packages/calypso-build/webpack.config.js
                   make build-source CONFIG_ENV=$CONFIG_ENV EMIT_STATS=false MINIFY_JS=$MINIFY_JS NODE_ARGS="$NODE_ARGS"
-                # else
                   make desktop/config.json CONFIG_ENV=$CONFIG_ENV
                   make build-desktop
-                # fi
   test: &test
     run:
       name: Test
