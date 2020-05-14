@@ -131,9 +131,9 @@ references:
     run:
       name: Finalize calypso cache
       command: |
-              if [ "$(cat calypso-current-hash)" != "$(cat calypso-hash)" ]; then
+              # if [ "$(cat calypso-current-hash)" != "$(cat calypso-hash)" ]; then
                 cp calypso-current-hash calypso-hash
-              fi
+              # fi
   calypso_save_cache: &calypso_save_cache
     save_cache:
       name: Save calypso cache
@@ -148,12 +148,13 @@ references:
                 nvm use
 
                 # only build the whole bundle when there is no calypso-hash file
-                if [ "$(cat calypso-current-hash)" != "$(cat calypso-hash)" ]; then
+                # if [ "$(cat calypso-current-hash)" != "$(cat calypso-hash)" ]; then
+                  cp calypso-package.json calypso/package.json
                   make build-source CONFIG_ENV=$CONFIG_ENV EMIT_STATS=false MINIFY_JS=$MINIFY_JS NODE_ARGS="$NODE_ARGS"
-                else
+                # else
                   make desktop/config.json CONFIG_ENV=$CONFIG_ENV
                   make build-desktop
-                fi
+                # fi
   test: &test
     run:
       name: Test
@@ -226,7 +227,7 @@ jobs:
     environment:
       CONFIG_ENV: release
       MINIFY_JS: true
-      NODE_ARGS: --max_old_space_size=3072
+      NODE_ARGS: --max_old_space_size=3584
       CALYPSO_HASH: << pipeline.parameters.CALYPSO_HASH >>
       sha: << pipeline.parameters.sha >>
       calypsoProject: << pipeline.parameters.calypsoProject >>
@@ -235,7 +236,7 @@ jobs:
       - *install_linux_dependencies
       - *setup_calypso
       - *calypso_prepare_cache
-      - *calypso_restore_cache
+      # - *calypso_restore_cache
       - *restore_nvm
       - *setup_nvm
       - *save_nvm
