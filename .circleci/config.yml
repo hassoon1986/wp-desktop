@@ -70,7 +70,7 @@ references:
   save_node_module_cache: &save_node_module_cache
     save_cache:
       name: Save node module cache
-      key: v2-npm-{{ arch }}-{{ checksum "calypso/.nvmrc" }}-{{ checksum "yarn.lock" }}-{{ checksum "calypso/yarn.lock" }}
+      key: v2-npm-{{ arch }}-{{ .Environment.CACHE_VERSION }}-{{ checksum "calypso/.nvmrc" }}-{{ checksum "yarn.lock" }}-{{ checksum "calypso/yarn.lock" }}
       paths:
         - $HOME/.config/yarn/global
   install_node_modules: &install_node_modules
@@ -137,7 +137,7 @@ references:
   calypso_save_cache: &calypso_save_cache
     save_cache:
       name: Save calypso cache
-      key: v6-calypso-{{ .Environment.CIRCLE_JOB }}-{{ arch }}-{{ checksum "calypso-current-hash" }}
+      key: v6-calypso-{{ .Environment.CACHE_VERSION }}-{{ .Environment.CIRCLE_JOB }}-{{ arch }}-{{ checksum "calypso-current-hash" }}
       paths: *app_cache_paths
   build_sources: &build_sources
     run:
