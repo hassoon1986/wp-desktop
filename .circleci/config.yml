@@ -70,7 +70,7 @@ references:
   save_node_module_cache: &save_node_module_cache
     save_cache:
       name: Save node module cache
-      key: v2-npm-{{ arch }}-{{ .Environment.CACHE_VERSION }}-{{ checksum "calypso/.nvmrc" }}-{{ checksum "yarn.lock" }}-{{ checksum "calypso/yarn.lock" }}
+      key: v2-npm-{{ arch }}-{{ checksum "calypso/.nvmrc" }}-{{ checksum "yarn.lock" }}-{{ checksum "calypso/yarn.lock" }}
       paths:
         - $HOME/.config/yarn/global
   install_node_modules: &install_node_modules
@@ -137,7 +137,7 @@ references:
   calypso_save_cache: &calypso_save_cache
     save_cache:
       name: Save calypso cache
-      key: v6-calypso-{{ .Environment.CACHE_VERSION }}-{{ .Environment.CIRCLE_JOB }}-{{ arch }}-{{ checksum "calypso-current-hash" }}
+      key: v6-calypso-{{ .Environment.CIRCLE_JOB }}-{{ arch }}-{{ checksum "calypso-current-hash" }}
       paths: *app_cache_paths
   build_sources: &build_sources
     run:
@@ -149,7 +149,7 @@ references:
 
                 # only build the whole bundle when there is no calypso-hash file
                 # if [ "$(cat calypso-current-hash)" != "$(cat calypso-hash)" ]; then
-                  cp calypso-package.json calypso/package.json
+                  cp calypso-packages-webpack.config.js calypso/packages/calypso-build/webpack.config.js
                   make build-source CONFIG_ENV=$CONFIG_ENV EMIT_STATS=false MINIFY_JS=$MINIFY_JS NODE_ARGS="$NODE_ARGS"
                 # else
                   make desktop/config.json CONFIG_ENV=$CONFIG_ENV
@@ -227,7 +227,7 @@ jobs:
     environment:
       CONFIG_ENV: release
       MINIFY_JS: true
-      NODE_ARGS: --max_old_space_size=8192
+      NODE_ARGS: --max_old_space_size=3072
       CALYPSO_HASH: << pipeline.parameters.CALYPSO_HASH >>
       sha: << pipeline.parameters.sha >>
       calypsoProject: << pipeline.parameters.calypsoProject >>
