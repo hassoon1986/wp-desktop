@@ -144,7 +144,6 @@ references:
                 source $HOME/.nvm/nvm.sh
                 nvm use
 
-                  cp calypso-packages-webpack.config.js calypso/packages/calypso-build/webpack.config.js
                   make build-source CONFIG_ENV=$CONFIG_ENV EMIT_STATS=false MINIFY_JS=$MINIFY_JS NODE_ARGS="$NODE_ARGS"
                   make desktop/config.json CONFIG_ENV=$CONFIG_ENV
                   make build-desktop
@@ -219,7 +218,7 @@ jobs:
     working_directory: ~/wp-desktop
     environment:
       CONFIG_ENV: release
-      MINIFY_JS: true
+      MINIFY_JS: false
       NODE_ARGS: --max_old_space_size=3072
       CALYPSO_HASH: << pipeline.parameters.CALYPSO_HASH >>
       sha: << pipeline.parameters.sha >>
