@@ -222,11 +222,12 @@ jobs:
   build:
     docker:
       - image: circleci/node:12.16.2-browsers
+    resource_class: large # machine with 4 vCPUS and 8gb of ram
     working_directory: ~/wp-desktop
     environment:
       CONFIG_ENV: release
       MINIFY_JS: true
-      NODE_ARGS: --max_old_space_size=3072
+      NODE_ARGS: --max_old_space_size=6144
       CALYPSO_HASH: << pipeline.parameters.CALYPSO_HASH >>
       sha: << pipeline.parameters.sha >>
       calypsoProject: << pipeline.parameters.calypsoProject >>
